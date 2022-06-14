@@ -34,9 +34,9 @@ class MovieItem extends StatelessWidget{
                           ),
                           Align(
                             alignment: Alignment.topRight,
-                            child: IconButton(color: Colors.amber,icon: favoritesProvider.movies.contains(movie)?Icon(Icons.favorite_border,):Icon(Icons.favorite), onPressed: (){
+                            child: IconButton(color: Colors.amber,icon: !favoritesProvider.movies.contains(movie)?Icon(Icons.favorite_border,):Icon(Icons.favorite), onPressed: (){
 
-                              if(favoritesProvider.movies.contains(movie)){
+                              if(!favoritesProvider.movies.contains(movie)){
                               favoritesProvider.addToFavorites(movie);
                               ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Added to favorites")));
                               }else{

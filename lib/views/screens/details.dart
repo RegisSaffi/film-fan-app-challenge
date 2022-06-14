@@ -126,13 +126,13 @@ class _DetailsScreenState extends State<DetailsScreen> {
             actions: [
               IconButton(
                   color: Colors.amber,
-                  icon: favoritesProvider.movies.contains(widget.movie)
+                  icon: !favoritesProvider.movies.contains(widget.movie)
                       ? Icon(
                           Icons.favorite_border,
                         )
                       : Icon(Icons.favorite),
                   onPressed: () {
-                    if (favoritesProvider.movies.contains(widget.movie)) {
+                    if (!favoritesProvider.movies.contains(widget.movie)) {
                       favoritesProvider.addToFavorites(widget.movie);
                       ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text("Added to favorites")));
@@ -170,12 +170,15 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       children: [
                         Card(
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(7)),
+                              borderRadius: BorderRadius.circular(10)),
                           clipBehavior: Clip.antiAliasWithSaveLayer,
                           child: Container(
+                            width: MediaQuery.of(context).size.width,
                             padding: EdgeInsets.all(5),
-                            child: Row(
+                            child: Flex(
                               crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.max,
+                              direction: Axis.horizontal,
                               children: [
                                 Card(
                                   shape: RoundedRectangleBorder(
@@ -190,55 +193,58 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                     ),
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "${widget.movie.originalTitle}",
-                                        overflow: TextOverflow.visible,
-                                        style: TextStyle(fontSize: 22),
-                                      ),
-                                      SizedBox(
-                                        height: 7,
-                                      ),
-                                      Text(
-                                        "${widget.movie.releaseDate}",
-                                        style: TextStyle(color: Colors.grey),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 8.0, bottom: 8.0),
-                                        child: Row(
-                                          children: [
-                                            RatingBar(
-                                              rating:
-                                                  widget.movie.voteAverage / 2,
-                                              small: true,
-                                            ),
-                                            SizedBox(
-                                              width: 20,
-                                            ),
-                                            Text("${widget.movie.voteAverage}"),
-                                            Icon(
-                                              Icons.stars,
-                                              size: 14,
-                                            ),
-                                            SizedBox(
-                                              width: 20,
-                                            ),
-                                            Text("${widget.movie.voteCount}"),
-                                            Icon(
-                                              Icons.group,
-                                              size: 14,
-                                            ),
-                                          ],
+                                Flexible(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "${widget.movie.originalTitle}",
+                                          softWrap: true,
+                                          style: TextStyle(fontSize: 22),
                                         ),
-                                      )
-                                    ],
+                                        SizedBox(
+                                          height: 7,
+                                        ),
+                                        Text(
+                                          "${widget.movie.releaseDate}",
+                                          style: TextStyle(color: Colors.grey),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 8.0, bottom: 8.0),
+                                          child: Row(
+                                            children: [
+                                              RatingBar(
+                                                rating:
+                                                    widget.movie.voteAverage / 2,
+                                                small: true,
+                                                color: Colors.amber,
+                                              ),
+                                              SizedBox(
+                                                width: 20,
+                                              ),
+                                              Text("${widget.movie.voteAverage}"),
+                                              Icon(
+                                                Icons.stars,
+                                                size: 14,
+                                              ),
+                                              SizedBox(
+                                                width: 20,
+                                              ),
+                                              Text("${widget.movie.voteCount}"),
+                                              Icon(
+                                                Icons.group,
+                                                size: 14,
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 )
                               ],
@@ -281,7 +287,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
           ),
           SliverToBoxAdapter(
             child: SizedBox(
-              height: 150,
+              height: 160,
               child:_castProvider.isLoading?Center(child: CircularProgressIndicator.adaptive()):!_castProvider.isLoading&&_castProvider.cast.length!=0?  ListView.builder(
                 itemBuilder: (context, i) => Container(
                   child: LimitedBox(
@@ -293,7 +299,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           CircleAvatar(
                             radius: 50,
                             backgroundImage: NetworkImage(
-                              "${Constants.IMAGE_BASE_URL}${_castProvider.cast[i].profilePath}",
+                              _castProvider.cast[i].profilePath==null?"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png":"${Constants.IMAGE_BASE_URL}${_castProvider.cast[i].profilePath}",
                             ),
                           ),
                           Flexible(
@@ -308,6 +314,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           Flexible(
                               child: Text(
                             "${_castProvider.cast[i].character}",
+                            textAlign: TextAlign.center,
                             overflow: TextOverflow.visible,
                             style: TextStyle(color: Colors.grey, fontSize: 13),
                           ))
@@ -348,6 +355,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         });
                       },
                       rating: rating??0,
+                      color: Colors.amber,
                     ),
                   ),
                   ElevatedButton(

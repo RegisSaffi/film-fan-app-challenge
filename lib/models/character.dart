@@ -4,10 +4,10 @@ class Character{
 
   String name;
   String character;
-  String profilePath;
+  String? profilePath;
   int id;
 
-  Character({required this.name, required this.character, required this.profilePath, required this.id});
+  Character({required this.name, required this.character, this.profilePath, required this.id});
 
   factory Character.fromJson(Map<String,dynamic> json)=>Character(
     name:json['name'],
