@@ -4,7 +4,7 @@ Movies app challenge built with Flutter
 
 ## How to run this project
 
-This project is built with Flutter and Dart language, It is created with Flutter `2.0.1` version, and Dart `2.12.0` version.
+This project is built with Flutter and Dart language, It is created with Flutter `2.10.0` version, and Dart `2.16.0` version.
 
 For you to compile and run this project:
 

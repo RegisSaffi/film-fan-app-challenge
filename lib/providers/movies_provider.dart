@@ -10,14 +10,16 @@ class MoviesProvider extends ChangeNotifier{
 
   bool isLoading=false;
   List<Movie> movies=[];
+  late String currentLabel="";
   late String message;
 
-  getMovies(String a) async {
+  getMovies(String label) async {
     var dio=Dio();
-    isLoading=true;
+    isLoading=movies.isEmpty || currentLabel!=label;
+    currentLabel=label;
 
     try{
-      var url="${Constants.API_BASE_URL}movie/$a?api_key=${Constants.TMDB_API_KEY}&language=en-US&page=1";
+      var url="${Constants.API_BASE_URL}movie/$label?api_key=${Constants.TMDB_API_KEY}&language=en-US&page=1";
       var res= await dio.get(url,options: Options(responseType: ResponseType.json));
 
       movies.clear();
