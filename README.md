@@ -6,6 +6,11 @@ Movies app challenge built with Flutter
 
 This project is built with Flutter and Dart language, It is created with Flutter `2.10.0` version, and Dart `2.16.0` version.
 
+**Some screenshots**
+
+
+<img src="https://github.com/RegisSaffi/film-fan-app-challenge/blob/main/assets/screenshots/movies.png" height="500" alt="iOS screenshot 1">                    <img src="https://github.com/RegisSaffi/film-fan-app-challenge/blob/main/assets/screenshots/details.png" height="500" alt="iOS screenshot 2">  
+
 For you to compile and run this project:
 
 [Download flutter SDK](https://flutter.dev/)
@@ -17,8 +22,8 @@ For you to compile and run this project:
 
 **External dependencies used**
 
-- [Provider](https://pub.dev/packages/provider)
-- [Dio](https://pub.dev/packages/dio)
+- [Provider](https://pub.dev/packages/provider) for state management
+- [Dio](https://pub.dev/packages/dio) for network calls
 
 
 For help getting started with Flutter, view the [online documentation](https://flutter.dev/docs)
