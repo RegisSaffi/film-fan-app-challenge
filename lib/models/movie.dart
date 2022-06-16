@@ -4,7 +4,7 @@ class Movie{
 
   String title;
   String originalTitle;
-  String backdropPath;
+  String? backdropPath;
   int id;
   num popularity;
   String posterPath;
@@ -16,7 +16,7 @@ class Movie{
   Movie({
       required this.title,
       required this.originalTitle,
-      required this.backdropPath,
+       this.backdropPath,
       required this.id,
       required this.popularity,
       required this.posterPath,

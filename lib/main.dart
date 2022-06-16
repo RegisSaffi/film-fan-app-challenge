@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
       title: 'Film Fan',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
+        primarySwatch: Colors.indigo,
       ),
       home: HomeScreen(
       ),
