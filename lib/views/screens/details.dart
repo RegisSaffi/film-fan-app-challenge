@@ -159,6 +159,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         child: Image.network(
                           "${Constants.IMAGE_BASE_URL}${widget.movie.backdropPath}",
                           fit: BoxFit.cover,
+                          frameBuilder: (context,child,frame,asy){
+                            return frame==null?Image.asset("assets/images/placeholder.png",fit: BoxFit.cover,):child;
+                          },
                         ),
                       ),
                     ],
