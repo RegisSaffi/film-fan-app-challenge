@@ -1,30 +1,57 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility that Flutter provides. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
 
+import 'dart:io';
+
+import 'package:film_fan/models/movie.dart';
+import 'package:film_fan/providers/favorites_provider.dart';
+import 'package:film_fan/views/widgets/movie_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:film_fan/main.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp());
+   setUpAll(() => HttpOverrides.global = null);
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+  testWidgets('Testing MovieItem() widget', (WidgetTester tester) async {
+    Movie movie = Movie(
+        title: "Movie title",
+        originalTitle: "original",
+        id: 110,
+        popularity: 100,
+        posterPath:
+            "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png",
+        voteAverage: 9.9,
+        voteCount: 33,
+        releaseDate: "2020/01/01",
+        overview: "Overview");
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
+    await tester.pumpWidget(MultiProvider(
+      providers: [ChangeNotifierProvider(create: (_) => FavoritesProvider())],
+      child: MaterialApp(
+        home: Material(
+          child: Builder(builder: (context) {
+            FavoritesProvider favoritesProvider =
+                Provider.of<FavoritesProvider>(context);
+            return MovieItem(movie: movie, favoritesProvider: favoritesProvider);
+          }),
+        ),
+      ),
+    ));
+
+    // Verify if there is a title text
+    expect(find.text('Movie title'), findsOneWidget);
+    //check if the vote average text found
+    expect(find.text('9.9'), findsOneWidget);
+
+    expect(find.byIcon(Icons.favorite_border), findsOneWidget);
+
+    // Tap the favorite icon
+    await tester.tap(find.byIcon(Icons.favorite_border));
     await tester.pump();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Check if favorite icon updated
+     expect(find.byIcon(Icons.favorite_border), findsNothing);
+     expect(find.byIcon(Icons.favorite), findsOneWidget);
+
   });
 }
