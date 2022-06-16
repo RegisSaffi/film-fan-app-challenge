@@ -31,6 +31,9 @@ class MovieItem extends StatelessWidget{
                           Image.network(
                             "${Constants.IMAGE_BASE_URL}${movie.posterPath}",
                             fit: BoxFit.cover,
+                            frameBuilder: (context,child,frame,asy){
+                              return frame==null?Image.asset("assets/images/placeholder.png",fit: BoxFit.cover,):child;
+                            },
                           ),
                           Align(
                             alignment: Alignment.topRight,
